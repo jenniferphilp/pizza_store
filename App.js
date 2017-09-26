@@ -34,26 +34,19 @@ class App extends Component {
   }
 
 
-  handlePromoChange (event) {
-    /* Your code here */
-  };
 
   handleSelectChange (event) {
-        //capture product name
+
         const name = event.target.value;
-        //create two array: one for product names and one for product prices
-        const productNames=Object.values(products).map( product => product.name )
-        const productPrices=Object.values(products).map( product => product.price )
-        
-        //grab the index of the product name to find corresponding product price
+
+        const productNames = Object.values(products).map( product => product.name )
+        const productPrices = Object.values(products).map( product => product.price )
+
         const index = productNames.indexOf(name);
-        //gives corresponding price for selected product name
         const price = productPrices[index];
 
-//set state for both name and price. Must be done at same time!
   this.setState({
         newName: name,
-        // newQuantity:this.state.newQuantity,
         price:price
     });
 
@@ -70,10 +63,8 @@ class App extends Component {
 
   handleAddClick (e) {
     e.preventDefault();
-    
-    //copy of addedProducts (array of objects)
+
     let array = this.state.addedProducts;
-    //create an array of only the product names in addedProducts
     const arrayNames=Object.values(array).map(item => item.name);
     
 
@@ -83,39 +74,31 @@ if (arrayNames.length === 0){
                         quantity: this.state.newQuantity, 
                         price: this.state.price,
                         subtotal:this.state.newQuantity*this.state.price});
-                        
-                        //handles rounding to two decimal places
-                        // array[0].subtotal.toFixed(2);
+
                       
                         this.setState({
                                 addedProducts: array,
-                                // total:array[0].subtotal.toFixed(2)
                                 total:array[0].subtotal.toFixed(2)
                         }) 
 }
 
 
-//check to see if this.state.newName already exists in this.state.addedProducts
-
 if (arrayNames.length > 0){
 
-//if product name does not yet exist in the array
     if (arrayNames.indexOf(this.state.newName) === -1){
         array.push({name:this.state.newName, 
                         quantity: this.state.newQuantity, 
                         price: this.state.price, 
                         subtotal:(this.state.newQuantity*this.state.price)});
 
-//create an array of just the subtotals from array (copy of addedProducts)
+
         const arrayPrices = Object.values(array).map( item => item.subtotal );   
         console.log(arrayPrices);    
-//use .reduce to add up all the prices to get Total.
         let total = arrayPrices.reduce(function (a, b){
             return a + b;
             
         })
 
-        // let roundTotal = Math.round(total * 100)/100;
 
                         this.setState({
                                 addedProducts: array,
@@ -125,7 +108,7 @@ if (arrayNames.length > 0){
                           
   
         }
-//if product name already exists in the array
+
 let oldTotal = this.state.total;
 
 if (arrayNames.indexOf(this.state.newName) !== -1){
@@ -251,8 +234,7 @@ render() {
   
 }
 
-/* <OrderTable> renders the table and thead tags */
-/* Do not change */
+
 class DisplayTable extends Component {
 
 
@@ -289,7 +271,7 @@ class DisplayTable extends Component {
 }
 
 class PromoCode extends Component {
-//  - if the user enters the code PROMO10, a promotional discount of 10% should be applied to product subtotals
+//  - if the user enters the code prom15, a promotional discount of 15% should be applied to product subtotals
 
     render(){
         return(
